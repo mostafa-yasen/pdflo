@@ -12,6 +12,7 @@ services:
     volumes:
       - ./backend:/app
       - static_volume:/app/staticfiles
+      - upload_volume:/app/uploads
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/admin/"]
@@ -19,6 +20,31 @@ services:
       timeout: 10s
       retries: 3
       start_period: 10s
+    networks:
+      - pdflo_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app:ro
+      - /app/node_modules
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - pdflo_network
+    environment:
+      - REACT_APP_API_URL=http://backend:8000
+
+networks:
+  pdflo_network:
+    driver: bridge
 
 volumes:
   static_volume:
+  upload_volume:
