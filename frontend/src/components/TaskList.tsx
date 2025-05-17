@@ -44,13 +44,13 @@ const TaskList = ({ refreshTrigger }: TaskListProps) => {
     let color;
     switch (status) {
       case 'completed':
-        color = '#4caf50';
+        color = theme.palette.success.main;
         break;
       case 'failed':
-        color = '#f44336';
+        color = theme.palette.error.main;
         break;
       default:
-        color = '#ff9800';
+        color = theme.palette.warning.main;
     }
 
     return (
