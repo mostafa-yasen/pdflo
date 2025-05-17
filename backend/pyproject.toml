@@ -1,0 +1,76 @@
+[project]
+name = "pdflo-backend"
+version = "0.0.1"
+description = "pdflo is a single-page web app designed for managing PDF Tasks."
+authors = [
+    {name = "Mostafa Yasin",email = "mostafa.a.yasin@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "django (>=5.2.1,<6.0.0)",
+    "djangorestframework (>=3.16.0,<4.0.0)",
+    "ruff (>=0.11.10,<0.12.0)",
+    "mypy (>=1.15.0,<2.0.0)",
+    "gunicorn (>=21.2.0,<22.0.0)"  # Adding Gunicorn as a dependency
+]
+
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+isort = "^6.0.1"
+pytest = "^8.3.5"
+pytest-cov = "^5.0.0"
+pre-commit = "^4.2.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+extend-ignore = ["E203", "E266", "E501"]
+
+[tool.mypy]
+files = "backend, compressor"
+ignore_missing_imports = true
+
+[tool.black]
+line-length = 88
+target-version = ["py39"]
+skip-string-normalization = true
+
+[tool.isort]
+profile = "black"
+line_length = 88
+known_third_party = ["django", "rest_framework"]
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+python_files = "test_*.py"
+addopts = "--cov=backend --cov-report=xml --cov-report=term --no-cov-on-fail"
+
+[tool.coverage.run]
+source = ["backend"]
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "*/__init__.py",
+    "*/settings.py",
+    "*/asgi.py",
+    "*/wsgi.py",
+    "backend/manage.py"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if __name__ == __main__:",
+    "pass",
+    "raise ImportError",
+]
+fail_under = 0
