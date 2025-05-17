@@ -7,7 +7,6 @@ repos:
       - id: check-yaml
       - id: check-added-large-files
       - id: check-merge-conflict
-      - id: flake8
 
   - repo: https://github.com/astral-sh/ruff-pre-commit.git
     rev: v0.11.10
@@ -30,3 +29,9 @@ repos:
         language: python
         additional_dependencies: [colorlog]
         entry: mypy backend/
+
+      - id: isort
+        name: isort
+        pass_filenames: false
+        language: python
+        entry: isort backend/
