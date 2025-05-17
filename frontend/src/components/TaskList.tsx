@@ -40,7 +40,7 @@ const TaskList = ({ refreshTrigger }: TaskListProps) => {
     fetchTasks();
   }, [refreshTrigger]);
 
-  const getStatusChip = (status: string) => {
+  const getStatusChip = (status: Task['status']) => {
     let color;
     switch (status) {
       case 'completed':
