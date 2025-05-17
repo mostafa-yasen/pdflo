@@ -1,6 +1,7 @@
 # Pdflo
 
-![CI](https://github.com/mostafa-yasen/pdflo/actions/workflows/ci.yml/badge.svg)
+![CI-Backend](https://github.com/mostafa-yasen/pdflo/actions/workflows/backend-ci.yml/badge.svg)
+![CI-Frontend](https://github.com/mostafa-yasen/pdflo/actions/workflows/frontend-ci.yml/badge.svg)
 [![codecov](https://codecov.io/gh/mostafa-yasen/pdflo/branch/main/graph/badge.svg)](https://codecov.io/gh/mostafa-yasen/pdflo)
 
 Pdflo is a single-page web app designed for managing PDF Tasks.
