@@ -4,5 +4,8 @@
 # Backend code
 /backend/ @mostafa.a.yasin
 
+# Frontend code
+/frontend/ @mostafa.a.yasin
+
 # CI/CD workflows
 /.github/ @mostafa.a.yasin

@@ -1,15 +1,15 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { configDefaults } from 'vitest/config';
+import { defineConfig as defineVitestConfig } from 'vitest/config';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(defineVitestConfig({
   plugins: [react()],
   server: {
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://backend:3001',
+        target: 'http://backend:8000',
         changeOrigin: true,
       },
     },
@@ -19,4 +19,4 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/setupTests.ts'],
   },
-});
+}));

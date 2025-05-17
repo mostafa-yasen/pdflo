@@ -1,7 +1,17 @@
 import { useEffect, useState } from 'react';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, CircularProgress, Button, Typography, Box
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  CircularProgress,
+  Button,
+  Typography,
+  Box,
+  useTheme,
 } from '@mui/material';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -22,6 +32,7 @@ interface TaskListProps {
 const TaskList = ({ refreshTrigger }: TaskListProps) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
+  const theme = useTheme();
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -62,7 +73,7 @@ const TaskList = ({ refreshTrigger }: TaskListProps) => {
           px: 1.5,
           py: 0.5,
           display: 'inline-block',
-          textTransform: 'capitalize'
+          textTransform: 'capitalize',
         }}
       >
         {status}
@@ -118,12 +129,7 @@ const TaskList = ({ refreshTrigger }: TaskListProps) => {
                     Download
                   </Button>
                 ) : (
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    disabled
-                    startIcon={<FileDownloadIcon />}
-                  >
+                  <Button variant="outlined" size="small" disabled startIcon={<FileDownloadIcon />}>
                     Download
                   </Button>
                 )}
