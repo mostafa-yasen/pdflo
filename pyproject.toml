@@ -21,6 +21,7 @@ dependencies = [
 black = "^25.1.0"
 isort = "^6.0.1"
 pytest = "^8.3.5"
+pytest-cov = "^5.0.0"
 pre-commit = "^4.2.0"
 
 [build-system]
@@ -29,6 +30,8 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
 line-length = 88
+
+[tool.ruff.lint]
 extend-ignore = ["E203", "E266", "E501"]
 
 [tool.mypy]
@@ -44,3 +47,31 @@ skip-string-normalization = true
 profile = "black"
 line_length = 88
 known_third_party = ["django", "rest_framework"]
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+python_files = "test_*.py"
+addopts = "--cov=backend --cov-report=xml --cov-report=term --no-cov-on-fail"
+
+[tool.coverage.run]
+source = ["backend"]
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "*/__init__.py",
+    "*/settings.py",
+    "*/asgi.py",
+    "*/wsgi.py",
+    "backend/manage.py"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if __name__ == __main__:",
+    "pass",
+    "raise ImportError",
+]
+fail_under = 0

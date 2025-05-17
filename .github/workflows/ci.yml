@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install dependencies
+        run: poetry install --no-interaction --no-root
+
+      - name: Run Ruff
+        run: poetry run ruff check backend
+
+      - name: Run MyPy
+        run: poetry run mypy backend
+
+      - name: Run Black check
+        run: poetry run black --check backend
+
+      - name: Run isort check
+        run: poetry run isort --check backend
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install dependencies
+        run: poetry install --no-interaction --no-root
+
+      - name: Run tests with coverage
+        run: poetry run pytest
+
+      # TODO: Enable this job
+      # - name: Upload coverage report
+      #   uses: codecov/codecov-action@v4
+      #   if: success() || failure()  # Run this step even if tests fail
+      #   with:
+      #     file: ./coverage.xml
+      #     fail_ci_if_error: true
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     verbose: true
+
+      # - name: Check coverage threshold
+      #   # This step will fail if coverage is below the threshold (80%)
+      #   # The threshold is set in pyproject.toml under [tool.coverage.report] -> fail_under
+      #   run: |
+      #     COVERAGE=$(poetry run coverage report | tail -1 | awk '{print $NF}' | sed 's/%//')
+      #     if (( $(echo "$COVERAGE < 80" | bc -l) )); then
+      #       echo "Coverage ${COVERAGE}% is below the required threshold of 80%"
+      #       exit 1
+      #     else
+      #       echo "Coverage ${COVERAGE}% meets the required threshold of 80%"
+      #     fi
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install dependencies
+        run: poetry install --no-interaction --no-root
+
+      - name: Validate Django project
+        run: |
+          cd backend
+          poetry run python manage.py check
+          poetry run python manage.py makemigrations --check --dry-run

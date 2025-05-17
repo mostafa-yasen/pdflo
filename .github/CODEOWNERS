@@ -1,0 +1,8 @@
+# These owners will be the default owners for everything in the repo.
+* @mostafa.a.yasin
+
+# Backend code
+/backend/ @mostafa.a.yasin
+
+# CI/CD workflows
+/.github/ @mostafa.a.yasin
