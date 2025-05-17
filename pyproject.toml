@@ -1,0 +1,45 @@
+[project]
+name = "pdflo"
+version = "0.0.1"
+description = "pdflo is a single-page web app designed for managing PDF Tasks."
+authors = [
+    {name = "Mostafa Yasin",email = "mostafa.a.yasin@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "django (>=5.2.1,<6.0.0)",
+    "djangorestframework (>=3.16.0,<4.0.0)",
+    "ruff (>=0.11.10,<0.12.0)",
+    "mypy (>=1.15.0,<2.0.0)"
+]
+
+[tool.poetry]
+
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+isort = "^6.0.1"
+pytest = "^8.3.5"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 88
+extend-ignore = ["E203", "E266", "E501"]
+
+[tool.mypy]
+files = "backend, compressor"
+ignore_missing_imports = true
+
+[tool.black]
+line-length = 88
+target-version = ["py39"]
+skip-string-normalization = true
+
+[tool.isort]
+profile = "black"
+line_length = 88
+known_third_party = ["django", "rest_framework"]
